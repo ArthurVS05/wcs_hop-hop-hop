@@ -6,11 +6,7 @@ import icon from "../../assets/icons-functionnalities/recipe.svg";
 import FooterBack from "./FooterBack";
 import FormCreateRecipe from "./FormCreateRecipe";
 
-export default function CreateRecipe({
-  setRecipeUpdated,
-  setComponentToShow,
-  pc,
-}) {
+export default function CreateRecipe({ media }) {
   return (
     <div className="font-Neue-Kabel bg-red-default md:bg-opacity-0">
       <div className="md:hidden">
@@ -24,11 +20,7 @@ export default function CreateRecipe({
         <h1 className="bg-red-default mx-auto text-cream text-xl rounded-[12px] h-fit w-fit px-4 my-5">
           Ajouter une nouvelle recette
         </h1>
-        <FormCreateRecipe
-          setRecipeUpdated={setRecipeUpdated}
-          setComponentToShow={setComponentToShow}
-          pc={pc}
-        />
+        <FormCreateRecipe media={media} />
       </main>
 
       <FooterBack text="Retourner aux recettes" to="/recipes" />

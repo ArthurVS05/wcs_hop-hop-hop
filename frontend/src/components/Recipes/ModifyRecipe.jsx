@@ -3,14 +3,18 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-unused-vars */
+import { useContext } from "react";
 import HeaderFunctionnalities from "../HeaderFunctionnalities";
 import icon from "../../assets/icons-functionnalities/recipe.svg";
 import FooterBack from "./FooterBack";
 import FormUpdateRecipe from "./FormUpdateRecipe";
 import ButtonAccessRefused from "../Not-Connected/ButtonAccessRefused";
-import notify from "../Notify/Notify";
+import { RecipeContext } from "../../context/RecipeContext";
 
-export default function ModifyRecipe({ setRecipeUpdated, setComponentToShow }) {
+export default function ModifyRecipe() {
+  // On récupère le RecipeConext
+  const { setRecipeUpdated, setComponentToShow } = useContext(RecipeContext);
+
   const recipe = JSON.parse(localStorage.getItem("recipeSelected"));
 
   return (
@@ -29,18 +33,10 @@ export default function ModifyRecipe({ setRecipeUpdated, setComponentToShow }) {
         {recipe && (
           <>
             <div className="md:hidden">
-              <FormUpdateRecipe
-                setRecipeUpdated={setRecipeUpdated}
-                setComponentToShow={setComponentToShow}
-                desktopOrMobile="mobile"
-              />
+              <FormUpdateRecipe desktopOrMobile="mobile" />
             </div>
             <div className="hidden md:block  md:w-11/12 w-3/4">
-              <FormUpdateRecipe
-                setRecipeUpdated={setRecipeUpdated}
-                setComponentToShow={setComponentToShow}
-                desktopOrMobile="desktop"
-              />
+              <FormUpdateRecipe desktopOrMobile="desktop" />
             </div>
           </>
         )}

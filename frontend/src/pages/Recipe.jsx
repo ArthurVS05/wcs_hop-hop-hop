@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
+import { RecipeContext } from "../context/RecipeContext";
 import HeaderFunctionnalities from "../components/HeaderFunctionnalities";
 import icon from "../assets/icons-functionnalities/recipe.svg";
 import FilterCategories from "../components/Recipes/FilterCategories";
@@ -10,40 +11,19 @@ import FooterRecipe from "../components/Recipes/FooterRecipe";
 import ModifyRecipe from "../components/Recipes/ModifyRecipe";
 
 export default function Recipe() {
-  // On gère le state du filtre de catégorie sélectionné
-  // Par défaut : filtre "Toutes"
-  const [filterSelected, setFilterSelected] = useState("Toutes");
-
-  // State pour gérer les recettes du groupe
-  const [recipesGroup, setRecipesGroup] = useState(null);
+  // On récupère le RecipeConext
+  const {
+    setRecipesGroup,
+    recipeUpdated,
+    componentToShow,
+    setComponentToShow,
+    currentRecipe,
+  } = useContext(RecipeContext);
 
   // State pour récupérer le group en cours
   const [group] = useState(JSON.parse(localStorage.getItem("group")));
 
-  // state pour re-render si recipe updated
-  const [recipeUpdated, setRecipeUpdated] = useState(false);
-
-  // state pour gérer l'id de la recette cliquée
-  const [recipeId, setRecipeId] = useState(
-    localStorage.getItem("recipeId") || null
-  );
-
-  // state pour gérer si on affiche les composents afficher la recette, modifier la recette ou créer une recette
-  const currentRecipe = JSON.parse(localStorage.getItem("recipeSelected"));
-  const [componentToShow, setComponentToShow] = useState(
-    currentRecipe ? "details recipe" : null
-  );
-
-  const recipesCategories = [
-    { id: 0, name: "Toutes" },
-    { id: 1, name: "Apéritifs" },
-    { id: 2, name: "Entrées" },
-    { id: 3, name: "Plats" },
-    { id: 4, name: "Desserts" },
-    { id: 5, name: "Boissons" },
-    { id: 6, name: "Petits-déjeuners" },
-  ];
-
+  // Afficher / Masquer le formulaire "Ajouter une recette"
   const handleClicCreateRecipe = () => {
     if (componentToShow !== "create recipe") {
       setComponentToShow("create recipe");
@@ -55,6 +35,7 @@ export default function Recipe() {
   };
 
   // On récupère les recettes du groupe côté backend
+  // On re-fetch si une recette a été modifiée / supprimée / ajoutée
   useEffect(() => {
     const fetchDataRecipesOfGroup = async () => {
       try {
@@ -95,43 +76,14 @@ export default function Recipe() {
       <main className=" md:flex rounded-t-3xl lg:rounded-t-[4rem] bg-cream h-custom shadow-top overflow-y-auto no-scrollbar">
         <ToastContainer />
         <div className="md:flex-1 z-10 md:shadow-lg lg:rounded-t-[4rem] lg:pt-5 lg:max-w-[800px] md:overflow-y-auto md:no-scrollbar ">
-          <FilterCategories
-            filterSelected={filterSelected}
-            recipesCategories={recipesCategories}
-            setFilterSelected={setFilterSelected}
-          />
-          <MapRecipes
-            recipesGroup={recipesGroup}
-            filterSelected={filterSelected}
-            recipesCategories={recipesCategories}
-            setRecipeUpdated={setRecipeUpdated}
-            setComponentToShow={setComponentToShow}
-            setRecipeId={setRecipeId}
-            recipeId={recipeId}
-          />
+          <FilterCategories />
+          <MapRecipes />
         </div>
         {/* Version PC et Tablette */}
         <div className="hidden z-0 md:block md:flex-1 md:overflow-y-auto">
-          {componentToShow === "details recipe" && (
-            <ShowRecipeDetails
-              recipeId={recipeId}
-              setComponentToShow={setComponentToShow}
-              recipeUpdated={recipeUpdated}
-            />
-          )}
-          {componentToShow === "create recipe" && (
-            <CreateRecipe
-              setRecipeUpdated={setRecipeUpdated}
-              setComponentToShow={setComponentToShow}
-              pc="pc"
-            />
-          )}
-          {componentToShow === "modify recipe" && (
-            <ModifyRecipe
-              setRecipeUpdated={setRecipeUpdated}
-              setComponentToShow={setComponentToShow}
-            />
-          )}
+          {componentToShow === "details recipe" && <ShowRecipeDetails />}
+          {componentToShow === "create recipe" && <CreateRecipe media="pc" />}
+          {componentToShow === "modify recipe" && <ModifyRecipe />}
         </div>
       </main>
       <FooterRecipe handleClicCreateRecipe={handleClicCreateRecipe} />

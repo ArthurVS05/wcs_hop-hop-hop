@@ -1,14 +1,16 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useContext, useState } from "react";
 import CloseBox from "./CloseBox";
 import notify from "../Notify/Notify";
+import { RecipeContext } from "../../context/RecipeContext";
 
 export default function DotsUpdateRecipe({
   setShowDotsUpdateRecipe,
   recipeId,
   recipeName,
-  setRecipeUpdated,
 }) {
+  const { setRecipeUpdated } = useContext(RecipeContext);
+
   const [newRecipeName, setNewRecipeName] = useState({ name: recipeName });
   const [deleteRecipe, setDeleteRecipe] = useState(false);
 

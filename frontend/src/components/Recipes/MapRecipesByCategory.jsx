@@ -1,16 +1,13 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable camelcase */
+import { useContext } from "react";
 import MapRecipeDivMobile from "./MapRecipeDivMobile";
 import MapRecipeDivPC from "./MapRecipeDivPC";
+import { RecipeContext } from "../../context/RecipeContext";
 
-export default function MapRecipesByCategory({
-  recipesGroup,
-  category,
-  setRecipeUpdated,
-  setComponentToShow,
-  setRecipeId,
-  recipeId,
-}) {
+export default function MapRecipesByCategory({ category }) {
+  const { recipesGroup } = useContext(RecipeContext);
+
   return (
     <>
       <div className="md:hidden">
@@ -29,8 +26,6 @@ export default function MapRecipesByCategory({
                 r_name={r_name}
                 r_category={r_category}
                 u_name={u_name}
-                setRecipeUpdated={setRecipeUpdated}
-                recipeId={recipeId}
               />
             ))}
       </div>
@@ -47,10 +42,6 @@ export default function MapRecipesByCategory({
               r_name={r_name}
               r_category={r_category}
               u_name={u_name}
-              setRecipeUpdated={setRecipeUpdated}
-              setComponentToShow={setComponentToShow}
-              setRecipeId={setRecipeId}
-              recipeId={recipeId}
             />
           ))}
       </div>

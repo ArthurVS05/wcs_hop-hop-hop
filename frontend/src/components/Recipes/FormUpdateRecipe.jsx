@@ -1,17 +1,17 @@
 /* eslint-disable no-alert */
 /* eslint-disable react/prop-types */
 /* eslint-disable camelcase */
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { handleErrorsInput } from "./FormCreateRecipe";
 import FormRecipe from "./FormRecipe";
 import notify from "../Notify/Notify";
+import { RecipeContext } from "../../context/RecipeContext";
 
-export default function FormUpdateRecipe({
-  setRecipeUpdated,
-  desktopOrMobile,
-  setComponentToShow,
-}) {
+export default function FormUpdateRecipe({ desktopOrMobile }) {
+  // On récupère le RecipeConext
+  const { setRecipeUpdated, setComponentToShow } = useContext(RecipeContext);
+
   const navigate = useNavigate();
   // Ouverture de l'input catégorie
   const [isOpen, setIsOpen] = useState(false);

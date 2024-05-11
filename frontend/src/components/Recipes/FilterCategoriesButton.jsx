@@ -1,10 +1,10 @@
+import { useContext } from "react";
+import { RecipeContext } from "../../context/RecipeContext";
+
 /* eslint-disable react/prop-types */
-export default function FilterCategoriesButton({
-  id,
-  name,
-  onClick,
-  filterSelected,
-}) {
+export default function FilterCategoriesButton({ id, name, onClick }) {
+  const { filterSelected } = useContext(RecipeContext);
+
   return (
     <button
       key={id}

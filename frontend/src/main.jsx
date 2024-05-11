@@ -27,6 +27,7 @@ import Recipe from "./pages/Recipe";
 import CreateGroup from "./pages/CreateGroup";
 import UserProvider, { UserContext } from "./context/UserContext";
 import SocketProvider from "./context/SocketContext";
+import RecipeProvider from "./context/RecipeContext";
 import RefusedAccess from "./components/Not-Connected/RefusedAccess";
 import EditTask from "./components/TodoList/EditTask";
 import CreateContact from "./pages/CreateContact";
@@ -56,13 +57,10 @@ function PrivateApp() {
     })
       .then((res) => res.json())
       .then((res) => {
-        // console.info("privateApp, res, isLogged>> ", res);
         setUser(res);
       })
       .catch((err) => console.info("Error fetching user data:", err));
   }, [setUser]);
-
-  // const socket = io.connect("http://localhost:4000");
 
   // Vérifie si l'utilisateur est connecté et si le chemin de l'URL n'est pas "/chat"
   const shouldDisplayChat =
@@ -202,7 +200,9 @@ root.render(
   <React.StrictMode>
     <UserProvider>
       <SocketProvider>
-        <RouterProvider router={router} />
+        <RecipeProvider>
+          <RouterProvider router={router} />
+        </RecipeProvider>
       </SocketProvider>
     </UserProvider>
   </React.StrictMode>

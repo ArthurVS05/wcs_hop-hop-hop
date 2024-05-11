@@ -10,7 +10,6 @@ export default function MapRecipeDivMobile({
   r_name,
   r_category,
   u_name,
-  setRecipeUpdated,
 }) {
   const navigate = useNavigate();
 
@@ -56,7 +55,6 @@ export default function MapRecipeDivMobile({
             setShowDotsUpdateRecipe={setShowDotsUpdateRecipe}
             recipeId={r_id}
             recipeName={r_name}
-            setRecipeUpdated={setRecipeUpdated}
           />
         )}
       </div>

@@ -1,18 +1,13 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable camelcase */
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import DotsUpdateRecipe from "./DotsUpdateRecipe";
+import { RecipeContext } from "../../context/RecipeContext";
 
-export default function MapRecipeDivPC({
-  r_id,
-  r_name,
-  r_category,
-  u_name,
-  setRecipeUpdated,
-  setComponentToShow,
-  setRecipeId,
-}) {
+export default function MapRecipeDivPC({ r_id, r_name, r_category, u_name }) {
+  const { setRecipeId, setComponentToShow } = useContext(RecipeContext);
+
   const [showDotsUpdateRecipe, setShowDotsUpdateRecipe] = useState(null);
 
   // console.info("showDots", showDotsUpdateRecipe);
@@ -27,7 +22,6 @@ export default function MapRecipeDivPC({
   };
   const storeClickedRecipe = (recipeId) => {
     localStorage.setItem("recipeId", JSON.stringify(recipeId));
-    // console.info("store() recipeId", recipeId);
   };
 
   const handleClicRecipe = (recipeIdClicked) => {
@@ -63,7 +57,6 @@ export default function MapRecipeDivPC({
             setShowDotsUpdateRecipe={setShowDotsUpdateRecipe}
             recipeId={r_id}
             recipeName={r_name}
-            setRecipeUpdated={setRecipeUpdated}
           />
         )}
       </div>
