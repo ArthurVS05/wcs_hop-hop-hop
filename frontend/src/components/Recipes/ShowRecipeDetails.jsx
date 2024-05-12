@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import ButtonPenModify from "./ButtonPenModify";
 import ShowRecipeDivInfo from "./ShowRecipeDivInfo";
 import ShowRecipeIconsDetails from "./ShowRecipeIconsDetails";
@@ -9,14 +9,14 @@ import { RecipeContext } from "../../context/RecipeContext";
 
 export default function ShowRecipeDetails() {
   // On récupère le RecipeConext
-  const { recipeUpdated, recipeId, setComponentToShow } =
+  const { recipeUpdated, recipeId, setComponentToShow, recipe, setRecipe } =
     useContext(RecipeContext);
-
-  const [recipe, setRecipe] = useState();
 
   const handleClickModify = () => {
     setComponentToShow("modify recipe");
   };
+
+  // console.info("ShowRecipeDetails >> recipe >>", recipe);
 
   useEffect(() => {
     if (recipeId) {

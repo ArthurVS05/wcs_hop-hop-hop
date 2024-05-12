@@ -10,15 +10,21 @@ import { RecipeContext } from "../../context/RecipeContext";
 
 export default function FormUpdateRecipe({ desktopOrMobile }) {
   // On récupère le RecipeConext
-  const { setRecipeUpdated, setComponentToShow } = useContext(RecipeContext);
+  const {
+    setRecipeUpdated,
+    setComponentToShow,
+    recipeId,
+    recipe,
+    recipesCategories,
+  } = useContext(RecipeContext);
 
   const navigate = useNavigate();
   // Ouverture de l'input catégorie
   const [isOpen, setIsOpen] = useState(false);
   // state sur l'id de la recette sélectionnée
-  const [recipeId] = useState(localStorage.getItem("recipeId"));
+  // const [recipeId] = useState(localStorage.getItem("recipeId"));
   // on gère les données de la recipe
-  const recipe = JSON.parse(localStorage.getItem("recipeSelected"));
+  // const recipe = JSON.parse(localStorage.getItem("recipeSelected"));
   const {
     r_name,
     r_description,
@@ -58,15 +64,15 @@ export default function FormUpdateRecipe({ desktopOrMobile }) {
     };
   });
 
-  const recipesCategories = [
-    { id: 0, name: "Toutes" },
-    { id: 1, name: "Apéritifs" },
-    { id: 2, name: "Entrées" },
-    { id: 3, name: "Plats" },
-    { id: 4, name: "Desserts" },
-    { id: 5, name: "Boissons" },
-    { id: 6, name: "Petits-déjeuners" },
-  ];
+  // const recipesCategories = [
+  //   { id: 0, name: "Toutes" },
+  //   { id: 1, name: "Apéritifs" },
+  //   { id: 2, name: "Entrées" },
+  //   { id: 3, name: "Plats" },
+  //   { id: 4, name: "Desserts" },
+  //   { id: 5, name: "Boissons" },
+  //   { id: 6, name: "Petits-déjeuners" },
+  // ];
 
   const filteredCategories = recipesCategories.filter(
     (category) => category.name !== "Toutes"

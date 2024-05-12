@@ -12,10 +12,10 @@ import ButtonAccessRefused from "../Not-Connected/ButtonAccessRefused";
 import { RecipeContext } from "../../context/RecipeContext";
 
 export default function ModifyRecipe() {
-  // On récupère le RecipeConext
-  const { setRecipeUpdated, setComponentToShow } = useContext(RecipeContext);
+  // On récupère le RecipeContext
+  const { recipe } = useContext(RecipeContext);
 
-  const recipe = JSON.parse(localStorage.getItem("recipeSelected"));
+  // const recipe = JSON.parse(localStorage.getItem("recipeSelected"));
 
   return (
     <div className="font-Neue-Kabel bg-red-default md:bg-opacity-0">

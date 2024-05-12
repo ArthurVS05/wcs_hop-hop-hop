@@ -36,8 +36,11 @@ export default function RecipeProvider({ children }) {
     { id: 6, name: "Petits-déjeuners" },
   ];
 
+  // recipe à afficher
+  const [recipe, setRecipe] = useState();
+
   return (
-    // On fournit le state user aux composants enfants
+    // On fournit le state Recipe aux composants enfants
     <RecipeContext.Provider
       value={{
         filterSelected,
@@ -52,6 +55,8 @@ export default function RecipeProvider({ children }) {
         setComponentToShow,
         currentRecipe,
         recipesCategories,
+        recipe,
+        setRecipe,
       }}
     >
       {children}

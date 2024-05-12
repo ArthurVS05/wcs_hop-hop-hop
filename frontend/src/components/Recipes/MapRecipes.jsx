@@ -8,8 +8,7 @@ export default function MapRecipes() {
   const {
     filterSelected,
     recipesGroup,
-
-    recipesCategories,
+    // recipesCategories,
   } = useContext(RecipeContext);
 
   // On récupère les catégories qui ont des recettes
@@ -30,15 +29,15 @@ export default function MapRecipes() {
     return customOrder.indexOf(a) - customOrder.indexOf(b);
   });
 
-  // ????????????? stocker est vraimen utile ???
-  const storeRecipesCategories = () => {
-    localStorage.setItem(
-      "recipesCategories",
-      JSON.stringify(recipesCategories)
-    );
-  };
+  // // ????????????? stocker est vraimen utile ???
+  // const storeRecipesCategories = () => {
+  //   localStorage.setItem(
+  //     "recipesCategories",
+  //     JSON.stringify(recipesCategories)
+  //   );
+  // };
 
-  storeRecipesCategories();
+  // storeRecipesCategories();
 
   return (
     <div className="flex flex-col gap-5 px-5 pb-20 lg:px-10 w-full">
