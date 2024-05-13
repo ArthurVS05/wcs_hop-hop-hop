@@ -25,9 +25,8 @@ Figma
 - Calendrier partagé
 - Messagerie instantanée
 
-- En cours :
-- To do lists
+En cours : To do lists
 
-- Pour une V2 :
+Pour une V2 :
 - Documents
 - Budget
