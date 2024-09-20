@@ -1,11 +1,12 @@
 /* eslint-disable no-alert */
 /* eslint-disable react/prop-types */
 /* eslint-disable camelcase */
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import FormRecipe from "./FormRecipe";
 import notify from "../Notify/Notify";
+import { RecipeContext } from "../../context/RecipeContext";
 
 // Fonction pour gérer les erreurs des inputs Create Recipe
 // Réutilisable pour UpdateRecipe
@@ -41,11 +42,9 @@ export const handleErrorsInput = (errors, name, value, setErrors) => {
   setErrors(newErrors);
 };
 
-export default function FormCreateRecipe({
-  setRecipeUpdated,
-  setComponentToShow,
-  media = "mobile",
-}) {
+export default function FormCreateRecipe({ media = "mobile" }) {
+  // On récupère le RecipeConext
+  const { setRecipeUpdated, setComponentToShow } = useContext(RecipeContext);
   const navigate = useNavigate();
   // Ouverture de l'input catégorie
   const [isOpen, setIsOpen] = useState(false);
@@ -124,7 +123,6 @@ export default function FormCreateRecipe({
           {
             method: "POST",
             headers: {
-              // eslint-disable-next-line prettier/prettier
               "Content-type": "application/json",
               Authorization: `Bearer ${JSON.parse(
                 localStorage.getItem("token")
@@ -166,7 +164,6 @@ export default function FormCreateRecipe({
         console.info("Erreur pour créer la recette >>", error);
       }
     };
-    // Vérification des erreurs
     const newErrors = {};
 
     if (categorySelected === null) {
@@ -181,7 +178,6 @@ export default function FormCreateRecipe({
       newErrors.category
     ) {
       notify("errorInputs", "Vérifiez vos données");
-      // Au moins un champ contient une erreur
       setErrors((prevErrors) => ({
         ...prevErrors,
         ...newErrors,

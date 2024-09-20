@@ -1,24 +1,18 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
 import ButtonPenModify from "./ButtonPenModify";
 import ShowRecipeDivInfo from "./ShowRecipeDivInfo";
 import ShowRecipeIconsDetails from "./ShowRecipeIconsDetails";
+import { RecipeContext } from "../../context/RecipeContext";
 /* eslint-disable camelcase */
 /* eslint-disable react/jsx-no-useless-fragment */
 
-export default function ShowRecipeDetails({
-  recipeId,
-  setComponentToShow,
-  recipeUpdated,
-}) {
-  // const navigate = useNavigate();
-
-  const [recipe, setRecipe] = useState();
+export default function ShowRecipeDetails() {
+  const { recipeUpdated, recipeId, setComponentToShow, recipe, setRecipe } =
+    useContext(RecipeContext);
 
   const handleClickModify = () => {
     setComponentToShow("modify recipe");
-    // navigate("/recipes/update");
   };
 
   useEffect(() => {
