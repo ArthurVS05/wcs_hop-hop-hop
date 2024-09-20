@@ -123,7 +123,6 @@ export default function FormCreateRecipe({ media = "mobile" }) {
           {
             method: "POST",
             headers: {
-              // eslint-disable-next-line prettier/prettier
               "Content-type": "application/json",
               Authorization: `Bearer ${JSON.parse(
                 localStorage.getItem("token")
@@ -165,7 +164,6 @@ export default function FormCreateRecipe({ media = "mobile" }) {
         console.info("Erreur pour créer la recette >>", error);
       }
     };
-    // Vérification des erreurs
     const newErrors = {};
 
     if (categorySelected === null) {
@@ -180,7 +178,6 @@ export default function FormCreateRecipe({ media = "mobile" }) {
       newErrors.category
     ) {
       notify("errorInputs", "Vérifiez vos données");
-      // Au moins un champ contient une erreur
       setErrors((prevErrors) => ({
         ...prevErrors,
         ...newErrors,

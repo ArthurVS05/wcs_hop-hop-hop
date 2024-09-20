@@ -26,6 +26,9 @@ export default function SignupForm() {
   // on importe useNavigate
   const navigate = useNavigate();
 
+  // Vérification pour exclure les séquences spécifiques
+  const containsDoubleDash = (value) => /--/.test(value);
+
   // On gère les erreurs si input invalide
   const handleErrorsInput = (name, value) => {
     const newErrors = { ...errors };
@@ -46,11 +49,18 @@ export default function SignupForm() {
         break;
       case "password":
         regex =
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-        newErrors.password = !regex.test(value)
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&-]{8,}$/; // eslint-disable-next-line no-case-declarations
+        const isValidPassword = regex.test(value);
+        newErrors.password = !isValidPassword
           ? "Le mot de passe doit contenir au moins 8 caractères, dont au moins une majuscule, une minuscule, un chiffre et un caractère spécial."
           : "";
+
+        if (containsDoubleDash(value)) {
+          newErrors.password =
+            "Le mot de passe ne peut pas contenir de double tiret (--).";
+        }
         break;
+
       default:
         break;
     }
@@ -59,14 +69,14 @@ export default function SignupForm() {
   };
 
   // quand le user rentre des données dans le formulaire, on update notre state dataForm
-  const handlChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setDataForm({ ...dataForm, [name]: value });
     handleErrorsInput(name, value);
   };
 
   // au submit du formulaire, on envoie dataForm au backend pour créer le user
-  const handlSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const fetchCreateUser = async () => {
       try {
@@ -103,8 +113,10 @@ export default function SignupForm() {
     handleErrorsInput("email", dataForm.email);
     handleErrorsInput("password", dataForm.password);
 
+    const hasErrors = Object.values(errors).some((error) => error !== "");
+
     // Vérifie s'il y a des erreurs dans les données du formulaire
-    if (Object.values(errors).some((error) => error !== "")) {
+    if (hasErrors) {
       notify("errorInputs", "Vérifiez vos données");
     } else {
       fetchCreateUser();
@@ -117,7 +129,7 @@ export default function SignupForm() {
       <SignupFormTitle />
       <form
         className="flex flex-col text-blue-default text-xl mx-5"
-        onSubmit={handlSubmit}
+        onSubmit={handleSubmit}
       >
         <label htmlFor="name" className="font-bold -mt-2">
           Prénom <RedStarForRequiredInput />
@@ -133,7 +145,7 @@ export default function SignupForm() {
             errors.name &&
             "border-red-default text-red-default focus:border-red-default"
           } border border-solid border-blue-default h-12 my-1 py-2 px-5 rounded-lg placeholder:text-blue-default focus:border-blue-default focus:border-2 focus:outline-none`}
-          onChange={handlChange}
+          onChange={handleChange}
         />
         {errors.name && (
           <p className="text-red-default text-[1rem] italic">{errors.name}</p>
@@ -152,7 +164,7 @@ export default function SignupForm() {
             errors.email &&
             "border-red-default text-red-default focus:border-red-default"
           } border border-solid border-blue-default h-12 mt-1 py-2 px-5 rounded-lg placeholder:text-blue-default focus:border-blue-default focus:border-2 focus:outline-none`}
-          onChange={handlChange}
+          onChange={handleChange}
         />
         {errors.email && (
           <p className="text-red-default text-[1rem] italic">{errors.email}</p>
@@ -171,7 +183,7 @@ export default function SignupForm() {
             errors.password &&
             "border-red-default text-red-default focus:border-red-default"
           } border border-solid border-blue-default h-12 mt-1 py-2 px-5 rounded-lg placeholder:text-blue-default focus:border-blue-default focus:border-2 focus:outline-none`}
-          onChange={handlChange}
+          onChange={handleChange}
         />
         {errors.password && (
           <p className="text-red-default text-[0.85rem] italic flex flex-wrap max-w-[20rem] leading-[1.2]">

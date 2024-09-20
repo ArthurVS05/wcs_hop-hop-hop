@@ -107,8 +107,6 @@ const create = async (req, res) => {
       catTaskName,
       catContactName
     );
-    // console.info("result userControllers", results);
-
     // on vérifie la réponse (on reçoit un objet par requête SQL)
     // affectedRows : pour les requêtes qui créent ou modifient ou suppriment une ligne (=affectent une ligne)
     // pour les requêtes de type SELECT ou SET, ça n'affecte pas la BDD (pas de modif). On vérifie si le statut du serveur = 10 (signifie que la requête a fonctionné)

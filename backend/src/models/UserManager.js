@@ -25,20 +25,20 @@ class UserManager extends AbstractManager {
       `
   INSERT INTO ${this.table} (u_name, u_email, u_hashedPassword, u_avatar)
   VALUES (?, ?, ?, ?);
-   SET @userId = LAST_INSERT_ID();
-   INSERT INTO group_table (g_name) VALUES (?);
-   SET @groupId = LAST_INSERT_ID();
-   INSERT INTO user_group (ug_user_id, ug_group_id, ug_user_role)
-   SELECT @userId, @groupId, ?;
-   INSERT INTO category_transaction (ctra_name, ctra_group_id)
-   SELECT ?, @groupId;
-   INSERT INTO category_document (cd_name, cd_group_id)
-   SELECT ?, @groupId;
-   INSERT INTO category_task (cta_name, cta_user_id, cta_group_id)
-   SELECT ?, @userId, @groupId;
-   INSERT INTO category_contact (cc_name, cc_group_id)
-   SELECT ?, @groupId;
-     `,
+  SET @userId = LAST_INSERT_ID();
+  INSERT INTO group_table (g_name) VALUES (?);
+  SET @groupId = LAST_INSERT_ID();
+  INSERT INTO user_group (ug_user_id, ug_group_id, ug_user_role)
+  SELECT @userId, @groupId, ?;
+  INSERT INTO category_transaction (ctra_name, ctra_group_id)
+  SELECT ?, @groupId;
+  INSERT INTO category_document (cd_name, cd_group_id)
+  SELECT ?, @groupId;
+  INSERT INTO category_task (cta_name, cta_user_id, cta_group_id)
+  SELECT ?, @userId, @groupId;
+  INSERT INTO category_contact (cc_name, cc_group_id)
+  SELECT ?, @groupId;
+  `,
       [
         userName,
         email,

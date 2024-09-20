@@ -19,12 +19,9 @@ export default function FormUpdateRecipe({ desktopOrMobile }) {
   } = useContext(RecipeContext);
 
   const navigate = useNavigate();
-  // Ouverture de l'input catégorie
+
   const [isOpen, setIsOpen] = useState(false);
-  // state sur l'id de la recette sélectionnée
-  // const [recipeId] = useState(localStorage.getItem("recipeId"));
-  // on gère les données de la recipe
-  // const recipe = JSON.parse(localStorage.getItem("recipeSelected"));
+
   const {
     r_name,
     r_description,
@@ -33,7 +30,7 @@ export default function FormUpdateRecipe({ desktopOrMobile }) {
     r_category,
     r_time_preparation,
   } = recipe;
-  // Gérer les erreurs d'inputs
+
   const [errors, setErrors] = useState({
     name: "",
     time_preparation: "",
@@ -42,7 +39,6 @@ export default function FormUpdateRecipe({ desktopOrMobile }) {
   });
   // Par défaut, la catégorie de la recette est celle existante
   const [categorySelected, setCategorySelected] = useState(r_category || "");
-  // on initialise les propriétés avec les valeurs de la recette cliquée
   const [dataRecipe, setDataRecipe] = useState(() => {
     if (recipe) {
       return {
@@ -64,40 +60,26 @@ export default function FormUpdateRecipe({ desktopOrMobile }) {
     };
   });
 
-  // const recipesCategories = [
-  //   { id: 0, name: "Toutes" },
-  //   { id: 1, name: "Apéritifs" },
-  //   { id: 2, name: "Entrées" },
-  //   { id: 3, name: "Plats" },
-  //   { id: 4, name: "Desserts" },
-  //   { id: 5, name: "Boissons" },
-  //   { id: 6, name: "Petits-déjeuners" },
-  // ];
-
   const filteredCategories = recipesCategories.filter(
     (category) => category.name !== "Toutes"
   );
 
-  // au clic du bouton des catégories
   const handleClickCat = () => {
     setIsOpen(!isOpen);
   };
 
-  // au choix d'une autre catégorie
   const handleClicNewCat = (newCatName) => {
     setCategorySelected(newCatName);
     setDataRecipe({ ...dataRecipe, category: newCatName });
     setIsOpen(!isOpen);
   };
 
-  // quand le user change les données des inputs, on update dataRecipe
   const handlChange = (e) => {
     const { name, value } = e.target;
     setDataRecipe({ ...dataRecipe, [name]: value });
     handleErrorsInput(errors, name, value, setErrors);
   };
 
-  // Au submit du form, on envoie dataUserUpdate avec la route PATCH
   const handleSubmit = (e) => {
     e.preventDefault();
     const fetchUpdateRecipe = async () => {
@@ -107,7 +89,6 @@ export default function FormUpdateRecipe({ desktopOrMobile }) {
           {
             method: "PATCH",
             headers: {
-              // eslint-disable-next-line prettier/prettier
               "Content-type": "application/json",
               Authorization: `Bearer ${JSON.parse(
                 localStorage.getItem("token")

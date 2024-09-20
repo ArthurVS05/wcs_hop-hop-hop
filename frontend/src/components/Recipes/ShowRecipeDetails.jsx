@@ -8,15 +8,12 @@ import { RecipeContext } from "../../context/RecipeContext";
 /* eslint-disable react/jsx-no-useless-fragment */
 
 export default function ShowRecipeDetails() {
-  // On récupère le RecipeConext
   const { recipeUpdated, recipeId, setComponentToShow, recipe, setRecipe } =
     useContext(RecipeContext);
 
   const handleClickModify = () => {
     setComponentToShow("modify recipe");
   };
-
-  // console.info("ShowRecipeDetails >> recipe >>", recipe);
 
   useEffect(() => {
     if (recipeId) {
